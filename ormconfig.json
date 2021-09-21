@@ -1,0 +1,16 @@
+{
+    "type": "postgres",
+    "host": "localhost",
+    "port": 5432,
+    "username": "postgres",
+    "password": "qwe123",
+    "database": "shareprofit",
+    "synchronize": true,
+    "logging": false,
+    "entities": ["dist/**/*.entity.js"],
+    "migrations": ["migration/**/*.ts"],
+    "cli": {
+        "migrationsDir": "migration"
+    },
+    "subscribers": ["src/subscriber/**/*.ts"]
+ }
