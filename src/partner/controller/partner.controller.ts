@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query } from "@nestjs/common";
 import { PartnerEntity } from "../entity/partner.entity";
 import { PartnerService } from "../service/partner.service";
 
@@ -25,6 +25,16 @@ export class PartnerController{
     @Get("partner/:id")
     async getPartner(@Param("id", ParseIntPipe) id: number){
         return this.partnerService.getPartner(id);
+    }
+
+    @Get("profit")
+    async getProfitInPeriod(@Query("from", ParseIntPipe) from: number, @Query("to", ParseIntPipe) to: number){
+        return this.partnerService.getProfitInPeriod(from, to);
+    }
+
+    @Get("profit/:id")
+    async getPartnerProfitInPeriod(@Param("id", ParseIntPipe) id: number, @Query("from", ParseIntPipe) from: number, @Query("to", ParseIntPipe) to: number){
+        return this.partnerService.getPartnerProfitInPeriod(id, from, to);
     }
 
     @Delete("partner/:id")

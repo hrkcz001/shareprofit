@@ -61,33 +61,6 @@ export class PaymentService{
 
     };
 
-    getProfitInPeriod = async(from: number, to: number) => {
-
-        return await this.paymentRepository
-                            .createQueryBuilder("payment")
-                            .leftJoinAndSelect("payment.source", "source")
-                            .leftJoinAndSelect("source.ratios", "ratios")
-                            .leftJoinAndSelect("ratios.partner", "partner")
-                            .andWhere("payment.paymentDate >= :from", {from})
-                            .andWhere("payment.paymentDate <= :to", {to})
-                            .getMany()
-
-    }
-
-    getPartnerProfitInPeriod = async(id: number, from: number, to: number) => {
-
-        return await this.paymentRepository
-                            .createQueryBuilder("payment")
-                            .leftJoinAndSelect("payment.source", "source")
-                            .leftJoinAndSelect("source.ratios", "ratios")
-                            .leftJoinAndSelect("ratios.partner", "partner")
-                            .where("partner.id = :id", {id})
-                            .andWhere("payment.paymentDate >= :from", {from})
-                            .andWhere("payment.paymentDate <= :to", {to})
-                            .getOne()
-
-    }
-
     deletePayment = async(id: number) => {
 
         return await this.paymentRepository

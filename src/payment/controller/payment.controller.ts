@@ -31,16 +31,6 @@ export class PaymentController{
         return this.paymentService.getPayment(id);
     }
 
-    @Get('profit')
-    async getProfitInPeriod(@Query('from', ParseIntPipe) from: number, @Query('to', ParseIntPipe) to: number){
-        return this.paymentService.getProfitInPeriod(from, to);
-    }
-
-    @Get('profit/:id')
-    async getPartnerProfitInPeriod(@Param('id', ParseIntPipe) id: number, @Query('from', ParseIntPipe) from: number, @Query('to', ParseIntPipe) to: number){
-        return this.paymentService.getPartnerProfitInPeriod(id, from, to);
-    }
-
     @Delete('payment/:id')
     async deletePayment(@Param('id', ParseIntPipe) id: number){
         return this.paymentService.deletePayment(id);

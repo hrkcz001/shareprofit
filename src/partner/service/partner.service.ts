@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { async } from "rxjs";
+import { PaymentEntity } from "src/payment/entity/payment.entity";
 import { PartnerEntity } from "../entity/partner.entity";
 import { PartnerRepository } from "../repository/partner.repository";
 
@@ -46,6 +47,45 @@ export class PartnerService{
                             .getOne()
 
     };
+
+    getProfitInPeriod = async(from: number, to: number) => {
+
+        return await this.partnerRepository
+                            .createQueryBuilder()
+                            .select("partner.id", "id")
+                            .addSelect("partner.name", "name")
+                            .addSelect("ARRAY_AGG(payments.id)", "payments_id")
+                            .addSelect("SUM(payments.amount * ratios.value)", "sum")
+                            .from(PartnerEntity, "partner")
+                            .leftJoin("partner.ratios", "ratios")
+                            .leftJoin("ratios.source", "source")
+                            .leftJoin("source.payments", "payments")
+                            .where("payments.paymentDate >= :from", {from})
+                            .andWhere("payments.paymentDate <= :to", {to})
+                            .groupBy("partner.id")
+                            .getRawMany()
+
+    }
+
+    getPartnerProfitInPeriod = async(id: number, from: number, to: number) => {
+                                       
+        return await this.partnerRepository
+                            .createQueryBuilder()
+                            .select("partner.id", "id")
+                            .addSelect("partner.name", "name")
+                            .addSelect("ARRAY_AGG(payments.id)", "payments_id")
+                            .addSelect("SUM(payments.amount * ratios.value)", "sum")
+                            .from(PartnerEntity, "partner")
+                            .leftJoin("partner.ratios", "ratios")
+                            .leftJoin("ratios.source", "source")
+                            .leftJoin("source.payments", "payments")
+                            .where("partner.id = :id", {id})
+                            .andWhere("payments.paymentDate >= :from", {from})
+                            .andWhere("payments.paymentDate <= :to", {to})
+                            .groupBy("partner.id")
+                            .getRawOne()
+
+    }
 
     deletePartner = async(id: number) => {
 
