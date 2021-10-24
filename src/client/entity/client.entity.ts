@@ -1,29 +1,38 @@
-import { Equals, IsArray, IsDefined, IsEmail, IsEmpty, IsNumber, IsOptional, IsString, NotEquals } from "class-validator";
-import { PaymentEntity } from "src/payment/entity/payment.entity";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { ClientInterface } from "../types/client.types";
+import {
+  Equals,
+  IsArray,
+  IsDefined,
+  IsEmail,
+  IsEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  NotEquals,
+} from 'class-validator';
+import { PaymentEntity } from 'src/payment/entity/payment.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { ClientInterface } from '../types/client.types';
 
 @Entity()
-export class ClientEntity implements ClientInterface{
+export class ClientEntity implements ClientInterface {
+  // two classes for parsing and database
+  @IsEmpty()
+  @NotEquals(null)
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @IsEmpty()
-    @NotEquals(null)
-    @PrimaryGeneratedColumn()
-    id: number;
+  @IsOptional()
+  @IsEmail()
+  @Column()
+  email: string;
 
-    @IsOptional()
-    @IsEmail()
-    @Column()
-    email: string;
-    
-    @IsDefined()
-    @IsString()
-    @Column()
-    description: string;
+  @IsDefined()
+  @IsString()
+  @Column()
+  description: string;
 
-    @IsOptional()
-    @IsArray()
-    @OneToMany(type => PaymentEntity, payment => payment.client)
-    payments: PaymentEntity[];
-
+  @IsOptional()
+  @IsArray()
+  @OneToMany((type) => PaymentEntity, (payment) => payment.client)
+  payments: PaymentEntity[];
 }

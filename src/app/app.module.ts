@@ -10,13 +10,21 @@ import { SourceModule } from 'src/source/source.module';
 import { ProfitRatioModule } from 'src/profit_ratio/profit_ratio.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(), PaymentModule, PartnerModule, ClientModule, SourceModule, ProfitRatioModule],
+  imports: [
+    TypeOrmModule.forRoot(),
+    PaymentModule,
+    PartnerModule,
+    ClientModule,
+    SourceModule,
+    ProfitRatioModule,
+  ],
   controllers: [AppController],
-  providers: [AppService,
-              {
-                  provide: APP_PIPE,
-                  useClass: ValidationPipe,
-              },
-             ],
+  providers: [
+    AppService,
+    {
+      provide: APP_PIPE,
+      useClass: ValidationPipe,
+    },
+  ],
 })
 export class AppModule {}

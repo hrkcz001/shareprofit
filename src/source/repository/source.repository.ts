@@ -1,5 +1,5 @@
-import { EntityRepository, Repository } from "typeorm";
-import { SourceEntity } from "../entity/source.entity";
+import { EntityRepository, Repository } from 'typeorm';
+import { SourceEntity } from '../entity/source.entity';
 
 @EntityRepository(SourceEntity)
-export class SourceRepository extends Repository<SourceEntity>{}
+export class SourceRepository extends Repository<SourceEntity> {}
