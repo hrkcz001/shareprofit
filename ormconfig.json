@@ -5,7 +5,7 @@
     "username": "postgres",
     "password": "qwe123",
     "database": "shareprofit",
-    "synchronize": true,
+    "synchronize": false,
     "logging": false,
     "entities": ["dist/**/*.entity.js"],
     "migrations": ["migration/**/*.ts"],
