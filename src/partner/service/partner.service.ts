@@ -45,6 +45,7 @@ export class PartnerService {
       .addSelect('ARRAY_AGG(payments.id)', 'payments_id')
       .addSelect('SUM(payments.amount * ratios.value)', 'sum')
       .from(PartnerEntity, 'partner')
+      .leftJoin('partner.ratios', 'ratios')
       .leftJoin('ratios.source', 'source')
       .leftJoin('source.payments', 'payments')
       .where('payments.paymentDate >= :from', { from })
